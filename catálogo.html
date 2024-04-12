@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Flyfest</title>
+<link rel="icon" href="img/Logo Flyfest.png">
+<style>
+    * {
+        background-color: rosybrown;
+    }
+    body {
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: auto;
+        background-color: #f0f0f0;
+    }
+
+    .gallery-container {
+        text-align: center;
+        position: relative;
+    }
+
+    .gallery-image {
+        max-width: 80%;
+        max-height: 80%;
+        margin: 0 auto;
+        display: block;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-controls {
+        margin-top: 20px;
+    }
+
+    .gallery-controls button {
+        padding: 10px 20px;
+        margin: 0 5px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="gallery-container">
+    <img class="gallery-image" src="img/1.jpg" alt="Imagem 1">
+    <div class="gallery-controls">
+        <button onclick="prevImage()" id="prevButton" disabled>Anterior</button>
+        <button onclick="nextImage()" id="nextButton">Próxima</button>
+    </div>
+</div>
+
+<script>
+    const images = [
+        'img/1.jpg', 'img/3.jpg', 'img/4.jpg','img/5.jpg',
+        'img/6.jpg','img/7.jpg','img/8.jpg','img/9.jpg','img/10.jpg','img/11.jpg',
+        'img/12.jpg','img/13.jpg','img/14.jpg','img/15.jpg','img/16.jpg','img/18.jpg',
+        'img/19.jpg','img/20.jpg','img/21.jpg','img/22.jpg','img/23.jpg','img/24.jpg','img/25.jpg'
+        // Adicione mais imagens aqui conforme necessário
+    ];
+
+    let currentImageIndex = 0;
+    const imageElement = document.querySelector('.gallery-image');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    function prevImage() {
+        if (currentImageIndex > 0) {
+            currentImageIndex--;
+            animateImage('backward');
+            nextButton.disabled = false;
+            if (currentImageIndex === 0) {
+                prevButton.disabled = true;
+            }
+        }
+    }
+
+    function nextImage() {
+        if (currentImageIndex < images.length - 1) {
+            currentImageIndex++;
+            animateImage('forward');
+            prevButton.disabled = false;
+            if (currentImageIndex === images.length - 1) {
+                nextButton.disabled = true;
+            }
+        }
+    }
+
+    function animateImage(direction) {
+        const translate = direction === 'forward' ? 'translateX(-100%)' : 'translateX(100%)';
+        imageElement.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        imageElement.style.opacity = '0';
+        imageElement.style.transform = translate;
+
+        setTimeout(() => {
+            imageElement.src = images[currentImageIndex];
+            imageElement.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+            imageElement.style.opacity = '1';
+            imageElement.style.transform = 'translateX(0)';
+        }, 500);
+    }
+
+    window.onload = function() {
+        prevButton.disabled = true;
+    };
+</script>
+</body>
+</html>
